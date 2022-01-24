@@ -1,26 +1,26 @@
+# Copyright (c) 2022 Oracle and/or its affiliates.
+# All rights reserved. The Universal Permissive License (UPL), Version 1.0 as shown at http://oss.oracle.com/licenses/upl
+# CheckTestSuite.py
+# Description: Includes the logic to perform if test suite was included on PR
+
 import os.path
 import glob
 import json
+import utils.helpers.helper as helper
+import utils.statics.static as static
+
 
 def check_test_suite():
     target_dir = None
-    class_dir_files = []
-    paths = ['classes/securitycompliance/*', 'classes/reliabilityresilience/*', 'classes/performancecost/*',
-             'classes/opsefficiency/*']
+    class_dir_files = []    
 
-    python_files = []
-    python_file_paths = []
-    for path in paths:
-        list_of_files = glob.glob(path)
-        for file in list_of_files:
-            if '.py' in file and '__init__.py' not in file:
-                python_files.append(file)
-                python_file_paths.append((file, path))
+    python_files, python_file_paths = helper.get_files_and_paths()
+      
 
+    latest_file = helper.get_latest_file(python_files)
 
-    latest_file = max(python_files, key=os.path.getctime)
-    class_name = latest_file.split('/')[1]
-    class_path = '/'+latest_file.split('/')[1] + '/'
+    class_name = helper.get_class_name(latest_file)
+    class_path = helper.get_class_path(latest_file)
 
     class_files = []
     for pairs in python_file_paths:

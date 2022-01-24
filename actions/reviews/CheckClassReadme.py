@@ -1,25 +1,16 @@
 import os.path
 import glob
 import json
+import utils.helpers.helper as helper
 
 
 def check_read_me():
 
     class_path = None
     readme_path = None
-    paths = ['classes/securitycompliance/*', 'classes/reliabilityresilience/*', 'classes/performancecost/*',
-             'classes/opsefficiency/*']
+    python_files, python_file_paths = helper.get_files_and_paths()
 
-    python_files = []
-    python_file_paths = []
-    for path in paths:
-        list_of_files = glob.glob(path)
-        for file in list_of_files:
-            if '.py' in file and '__init__.py' not in file:
-                python_files.append(file)
-                python_file_paths.append((file, path))
-
-    latest_file = max(python_files, key=os.path.getctime)
+    latest_file = helper.get_latest_file(python_files)
 
     text_list = []
 
