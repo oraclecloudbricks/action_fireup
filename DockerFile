@@ -1,5 +1,0 @@
-# Copyright (c) 2022 Oracle and/or its affiliates.
-
-FROM python:3.6.15-alpine3.14
-
-COPY backend_check /backend_check
