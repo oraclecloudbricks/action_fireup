@@ -1,0 +1,6 @@
+# Copyright (c) 2022 Oracle and/or its affiliates.
+name: 'Action Builder'
+description: 'Builds all actions in actions directory using Docker'
+runs:
+  using: 'docker'
+  image: 'docker://np1920/actions_repo:v1'
