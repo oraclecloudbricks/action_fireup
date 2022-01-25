@@ -7,6 +7,7 @@
 
 echo "Running Action Builder"
 echo ""
-python3 ../../actions/reviews/CheckClassReadme.py
-python3 ../../actions/reviews/CheckTestSuite.py
-cp ../../sample.json .
+cd ../../
+python3 -m actions.reviews.CheckClassReadme
+python3 -m actions.reviews.CheckTestSuite
+cp sample.json github/workspace/sample.json

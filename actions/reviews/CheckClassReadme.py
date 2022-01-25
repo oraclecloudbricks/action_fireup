@@ -1,74 +1,51 @@
-import os.path
-import glob
+# Copyright (c) 2022 Oracle and/or its affiliates.
+# All rights reserved. The Universal Permissive License (UPL), Version 1.0 as shown at http://oss.oracle.com/licenses/upl
+# CheckClassReadme.py
+# Description: Includes the logic to check if Readme has been updated with corresponding class during a PR
+
+from actions.utils.helpers.helper import *
 import json
-import utils.helpers.helper as helper
+import os
 
+def check_readme():
 
-def check_read_me():
+    files_per_class = get_class_files()
 
-    class_path = None
-    readme_path = None
-    python_files, python_file_paths = helper.get_files_and_paths()
-
-    latest_file = helper.get_latest_file(python_files)
-
-    text_list = []
-
-    for pairs in python_file_paths:
-        if latest_file in pairs:
-            index = python_file_paths.index(pairs)
-            class_path = python_file_paths[index][1]
-            readme_path = class_path.split('/*')[0] + '/README.md'
-            if not os.path.exists(readme_path):
-                master_json = {
-                    "README_check": {
-                        "action_name": "check_readme",
-                        "action_path": "actions/check_class_readme.py",
-                        "description": "The following path: {} has no README file".format(readme_path),
-                        "passed": 0
-                    }
-                }
-                with open('../../../sample.json', mode='w') as f:
-                    f.write(json.dumps(master_json, indent=2))
-                raise Exception("The following path: {} has no README file".format(readme_path))
-
+    for key in files_per_class:
+        class_files = files_per_class[key]
+        readme_path = get_readme_path(key)
+        readme_items = []
+        if os.path.exists(readme_path):
             with open(readme_path) as f:
                 for line in f:
                     if '.py' in line:
                         name = line.split('.py')[0].split('[')[1]
-                        text_list.append(name)
-    class_files = []
-    for pairs in python_file_paths:
-        if class_path in pairs:
-            class_files.append(pairs[0])
-
-    if len(text_list) != len(class_files):
-        master_json = {
-            "README_check": {
-                "action_name": "check_readme",
-                "action_path": "actions/check_class_readme.py",
-                "description": "Update {} to match the latest class update".format(readme_path),
-                "passed": 0
+                        readme_items.append(name)
+        if len(readme_items) != len(class_files):
+            master_json = {
+                "README_check": {
+                    "action_name": "check_readme",
+                    "action_path": "actions/check_class_readme.py",
+                    "description": "Update {} to match the latest class update".format(readme_path),
+                    "passed": 0
+                }
             }
-        }
-        with open('../../../sample.json', mode='w') as f:
-            f.write(json.dumps(master_json, indent=2))
-        raise Exception("Update {} to match the latest class update".format(readme_path))
-
+            with open('sample.json', mode='w') as f:
+                f.write(json.dumps(master_json, indent=2))
+            raise Exception("Update {} to match the latest class update".format(readme_path))
     else:
         master_json = {
             "README_check": {
                 "action_name": "check_readme",
                 "action_path": "actions/check_class_readme.py",
-                "description": "README.md file in {} is up to date".format(class_path),
+                "description": "README.md file: {} is up to date".format(readme_path),
                 "passed": 1
             }
         }
-        with open('../../../sample.json', mode='w') as f:
+        with open('sample.json', mode='w') as f:
             f.write(json.dumps(master_json, indent=2))
-        return print("README.md file in {} is up to date".format(class_path))
+        return print("README.md file: {} is up to date".format(readme_path))
 
 
 if __name__ == '__main__':
-    check_read_me()
-
+    check_readme()
