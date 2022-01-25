@@ -10,4 +10,4 @@ echo ""
 cd ../../
 python3 -m actions.reviews.CheckClassReadme
 python3 -m actions.reviews.CheckTestSuite
-cp sample.json github/workspace/sample.json
+cp results.json github/workspace/results.json

@@ -4,6 +4,8 @@
 # Description: Includes all helper functions used in project
 import actions.utils.statics.static as static
 import glob
+import json
+import os
 
 
 def get_class_files():
@@ -15,8 +17,32 @@ def get_class_files():
     return files_per_class
 
 
+def get_benchmark_dictionary(entry, action_name, action_path, description, status):
+    return {
+        str(entry): {
+            "action_name": action_name,
+            "action_path": action_path,
+            "description": description,
+            "passed": status
+        }
+    }
+
+
+def write_json_output(master_json):
+    if not os.path.exists('results.json'):
+        with open('results.json', mode='w') as f:
+            f.write(json.dumps(master_json, indent=2))
+
+    else:
+        with open('results.json') as f:
+            data = json.load(f)
+        data.update(master_json)
+        with open('results.json', 'w') as f:
+            json.dump(data, f, indent=2)
+
+
 def get_readme_path(files_per_class_key):
-    readme_path = 'github/workspace/classes/'+ str(files_per_class_key) + '/README.md'
+    readme_path = 'github/workspace/classes/' + str(files_per_class_key) + '/README.md'
     return readme_path
 
 
