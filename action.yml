@@ -1,6 +1,22 @@
 # Copyright (c) 2022 Oracle and/or its affiliates.
 name: 'Action Builder'
 description: 'Builds all actions in actions directory using Docker'
+
+inputs:
+  files_added:
+    description: 'All added files since the PR has been opened'
+    required: true
+  files_modified:
+    description: 'All modified files since the PR has been opened'
+    required: true
+  pr_body:
+    description: 'The body of the PR description'
+    required: true
+  branch_name:
+    description: 'The branch to be merged with master'
+    required: true
+
+
 runs:
   using: 'docker'
   image: 'docker://np1920/actions_repo:v1'

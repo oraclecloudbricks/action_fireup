@@ -9,5 +9,7 @@ echo "Running Action Builder"
 echo ""
 cd ../../
 python3 -m actions.reviews.CheckClassReadme
+echo ""
 python3 -m actions.reviews.CheckTestSuite
+echo ""
 cp results.json github/workspace/results.json
