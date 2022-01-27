@@ -47,6 +47,21 @@ def get_latest_added_files():
     return latest_files
 
 
+def get_latest_added_class_files():
+    latest_files = get_latest_added_files()
+    if 'classes/' in latest_files:
+        latest_added_files = latest_files.split(' ')
+        for latest_added_file in latest_added_files:
+            if 'classes/' in latest_added_file:
+                return latest_added_file
+        else:
+            master_json = get_benchmark_dictionary("CHECK_README", "check_readme", "actions/CheckClassReadme.py",
+                                                   "No new Python Class was added in this PR. These were the latest "
+                                                   "files added:".format(latest_added_files), 2)
+            write_json_output(master_json)
+            raise Exception('No new Python Class was added in this commit')
+
+
 def get_modified_files():
     modified_files = os.getenv('INPUT_FILES_MODIFIED')
     return modified_files

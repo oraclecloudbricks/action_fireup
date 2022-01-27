@@ -8,7 +8,7 @@ import os
 
 def check_readme():
 
-    latest_added_files = get_latest_added_files()
+    latest_added_files = get_latest_added_class_files()
     if 'classes/' in latest_added_files:
         latest_file_path = latest_added_files.split(' ')[0]
         latest_file_name = latest_file_path.split('/')[2]
@@ -27,12 +27,6 @@ def check_readme():
                                                                "Update {} to match the latest class update".format(readme_path), 0)
                         write_json_output(master_json)
                         raise Exception("Update {} to match the latest class update".format(readme_path))
-    else:
-        master_json = get_benchmark_dictionary("CHECK_README", "check_readme", "actions/CheckClassReadme.py",
-                                               "No new Python Class was added in this PR. These were the latest "
-                                               "files added:".format(latest_added_files), 2)
-        write_json_output(master_json)
-        raise Exception('No new Python Class was added in this commit')
 
 if __name__ == '__main__':
     check_readme()
