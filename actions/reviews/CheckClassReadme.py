@@ -18,12 +18,12 @@ def check_readme():
             with open(readme_path) as f:
                 for line in f:
                     if latest_file_name in line:
-                        master_json = get_benchmark_dictionary("CHECK_README", "check_readme", "actions/CheckClassReadme.py",
+                        master_json = get_benchmark_dictionary("CHECK_README", "check_readme", "actions/reviews/CheckClassReadme.py",
                                                            "README.md file: {} is up to date".format(readme_path), 1)
                         write_json_output(master_json)
                         print( "README.md file: {} is up to date".format(readme_path))
                     else:
-                        master_json = get_benchmark_dictionary("CHECK_README", "check_readme", "actions/CheckClassReadme.py",
+                        master_json = get_benchmark_dictionary("CHECK_README", "check_readme", "actions/reviews/CheckClassReadme.py",
                                                                "Update {} to match the latest class update".format(readme_path), 0)
                         write_json_output(master_json)
                         raise Exception("Update {} to match the latest class update".format(readme_path))
