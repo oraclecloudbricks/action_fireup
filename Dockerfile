@@ -9,7 +9,6 @@ RUN $FILES_MODIFIED > /files_modified
 RUN $PR_BODY > /pr_body
 RUN $BRANCH_NAME > /branch_name
 
-RUN echo "temp var: "
 RUN cat /files_added
 RUN cat /files_modified
 RUN cat /pr_body

@@ -55,7 +55,7 @@ def get_latest_added_class_files():
             if 'classes/' in latest_added_file:
                 return latest_added_file
         else:
-            master_json = get_benchmark_dictionary("CHECK_README", "check_readme", "actions/CheckClassReadme.py",
+            master_json = get_benchmark_dictionary("HELPER", "get_latest_added_class_files", "actions/untils/helpers/helper.py",
                                                    "No new Python Class was added in this PR. These were the latest "
                                                    "files added:".format(latest_added_files), 2)
             write_json_output(master_json)
