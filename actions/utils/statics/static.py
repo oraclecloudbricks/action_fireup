@@ -3,5 +3,6 @@
 # statics.py
 # Description: Includes all statics variables used in project
 
-__PATHS = ['github/workspace/classes/securitycompliance/[A-Za-z]*py', 'github/workspace/classes/reliabilityresilience/[A-Za-z]*py', 'github/workspace/classes/performancecost/[A-Za-z]*py',
-             'github/workspace/classes/opsefficiency/[A-Za-z]*py']
+__STATICS_PATH ='github/workspace/common/utils/statics/Statics.py'
+
+__HELPER_PATHS = 'github/workspace/common/utils/helpers/helper.py'
