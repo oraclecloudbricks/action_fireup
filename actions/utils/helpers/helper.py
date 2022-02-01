@@ -2,8 +2,7 @@
 # All rights reserved. The Universal Permissive License (UPL), Version 1.0 as shown at http://oss.oracle.com/licenses/upl
 # HELPER.py
 # Description: Includes all helper functions used in project
-import actions.utils.statics.static as static
-import glob
+
 import json
 import os
 
@@ -60,6 +59,11 @@ def get_latest_added_class_files():
                                                    "files added:".format(latest_added_files), 2)
             write_json_output(master_json)
             raise Exception('No new Python Class was added in this commit')
+
+
+def get_latest_added_class_file_path(latest_added_file):
+    test_path = 'github/workspace/' + str(latest_added_file)
+    return test_path
 
 
 def get_modified_files():
