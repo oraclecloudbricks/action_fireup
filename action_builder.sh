@@ -14,4 +14,6 @@ python3 -m actions.reviews.CheckTestSuite
 echo ""
 python3 -m actions.reviews.CheckStatics
 echo ""
+python3 -m actions.reviews.CheckHeaders
+echo ""
 cp results.json github/workspace/results.json
