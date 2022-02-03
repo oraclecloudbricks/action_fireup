@@ -9,11 +9,7 @@ import re
 
 def check_statics():
 
-    branch_name = get_branch_name()
-    rp_number = branch_name.split('feature/')[1]
-    if '.' in rp_number:
-        rp_number = rp_number.replace('.', '_')
-
+    rp_number = get_review_number()
     latest_modified_files = get_modified_files()
     if 'Statics.py' in latest_modified_files:
         file = open(static.__STATICS_PATH).read().splitlines()
@@ -51,7 +47,7 @@ def check_statics():
                                                "the modified files found: {}".format(
                                                    latest_modified_files), 0)
         write_json_output(master_json)
-        return print("Statics.py has not been modified for: {pos1}. These were the modified files found: {pos2}".format(pos1 = rp_number,pos2 = latest_modified_files))
+        return print( "Statics.py has not been modified for: {pos1}. These were the modified files found: {pos2}".format(pos1 = rp_number,pos2 = latest_modified_files))
 
 
 if __name__ == '__main__':
