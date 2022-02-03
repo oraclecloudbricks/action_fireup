@@ -24,8 +24,7 @@ def check_header():
                     write_json_output(master_json)
                 else:
                     master_json = get_benchmark_dictionary("CHECK_HEADER", "check_header", "actions/CheckHeaders.py",
-                                                           "Update the headers of {} to match the latest class update".format(
-                                                               latest_class_file), 0)
+                                                           "{pos1} contains the wrong headers: {pos2} ".format(pos1=latest_class_file, pos2=file[index:index + 2]), 0)
                     write_json_output(master_json)
                     raise Exception(' {pos1} contains the wrong headers: {pos2} '.format(
                         pos1=latest_class_file, pos2=file[index:index + 2]))

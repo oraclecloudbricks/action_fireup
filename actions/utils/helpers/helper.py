@@ -81,10 +81,28 @@ def get_branch_name():
     return branch_name
 
 
-def get_review_number(branch_name):
+def get_review_number():
+    branch_name = get_branch_name()
     rp_number = branch_name.split('feature/')[1]
     if '.' in rp_number:
         rp_number = rp_number.replace('.', '_')
-        return rp_number
+    if len(rp_number) > 10:
+        if rp_number[7].isalpha():
+            rp_number = rp_number[:6]
+            return rp_number
+        elif rp_number[9].isalpha():
+            if not rp_number[8].isalnum():
+                rp_number = rp_number[:8]
+                if not rp_number[-2].isalnum():
+                    rp_number = rp_number[:6] + '' + rp_number[7:]
+                    return rp_number
+            else:
+                rp_number = rp_number[:8]
+                if not rp_number[-1].isalnum():
+                    rp_number = rp_number[:7]
+                    return rp_number
+                if not rp_number[-2].isalnum():
+                    rp_number = rp_number[:6] + '' + rp_number[7:]
+                    return rp_number
     else:
         return rp_number
