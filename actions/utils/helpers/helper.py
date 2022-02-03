@@ -83,6 +83,7 @@ def get_branch_name():
 
 def get_review_number():
     branch_name = get_branch_name()
+    branch_name = branch_name.lower()
     rp_number = branch_name.split('feature/')[1]
     if '.' in rp_number:
         rp_number = rp_number.replace('.', '_')
