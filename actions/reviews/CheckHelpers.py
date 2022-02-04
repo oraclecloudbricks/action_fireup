@@ -17,11 +17,13 @@ def check_helpers():
                 s = match.start()
                 e = match.end()
                 if 'retry_strategy' not in file_contents[s:e]:
+                    helper_list = file_contents[s - 60:e]
+                    helper_list = ' '.join(helper_list.split())
                     master_json = get_benchmark_dictionary("CHECK_HELPERS_RETRY", "check_helpers",
                                                           "actions/reviews/CheckHelpers.py",
-                                                          "Retry Strategy is missing in: {}".format(file_contents[s-60:e]), 0)
+                                                          "Retry Strategy is missing in this: '{}' helper function".format(str(helper_list)), 0)
                     write_json_output(master_json)
-                    raise Exception("Retry Strategy is missing in: \n {}".format(file_contents[s-60:e]))
+                    raise Exception("Retry Strategy is missing in: \n {}".format(str(helper_list)))
             else:
                 master_json = get_benchmark_dictionary("CHECK_HELPERS_RETRY", "check_helpers",
                                                        "actions/reviews/CheckHelpers.py",
