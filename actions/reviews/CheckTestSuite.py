@@ -7,7 +7,7 @@ from actions.utils.helpers.helper import *
 
 def check_test_suite():
     latest_added_files = get_latest_added_files()
-    if 'test/' in latest_added_files:
+    if 'test_suite' in latest_added_files:
         test_added = latest_added_files.split(' ')[0]
         master_json = get_benchmark_dictionary("CHECK_TEST_SUITE", "check_test_suite", "actions/reviews/CheckTestSuite.py",
                                                "Test suite has been added successfully".format(test_added), 1)

@@ -2,9 +2,11 @@
 # All rights reserved. The Universal Permissive License (UPL), Version 1.0 as shown at http://oss.oracle.com/licenses/upl
 # HELPER.py
 # Description: Includes all helper functions used in project
-
+import actions.utils.statics.static as static
+import glob
 import json
 import os
+import re
 
 
 def get_benchmark_dictionary(entry, action_name, action_path, description, status):
@@ -54,7 +56,7 @@ def get_latest_added_class_files():
             if 'classes/' in latest_added_file:
                 return latest_added_file
         else:
-            master_json = get_benchmark_dictionary("HELPER", "get_latest_added_class_files", "actions/utils/helpers/helper.py",
+            master_json = get_benchmark_dictionary("HELPER", "get_latest_added_class_files", "actions/untils/helpers/helper.py",
                                                    "No new Python Class was added in this PR. These were the latest "
                                                    "files added:".format(latest_added_files), 2)
             write_json_output(master_json)
@@ -82,7 +84,8 @@ def get_branch_name():
 
 
 def get_review_number():
-    branch_name = get_branch_name().lower()
+    branch_name = get_branch_name()
+    branch_name = branch_name.lower()
     rp_number = branch_name.split('feature/')[1]
     if '.' in rp_number:
         rp_number = rp_number.replace('.', '_')
@@ -106,3 +109,38 @@ def get_review_number():
                     return rp_number
     else:
         return rp_number
+
+def check_tests():
+    if os.path.isfile(static.__TEST_LOG_PATH):
+        # print('FILE EXISTS')
+        log_file = open(static.__TEST_LOG_PATH).read()
+        for match in re.finditer('collected', log_file):
+            # print(match)
+            num_tests = log_file[match.start() + 10:match.end() + 3]
+            # print(num_tests)
+            counter = 0
+            for match in re.finditer('PASSED', log_file):
+                test_info = log_file[match.start():match.end() + 7]
+                counter += 1
+            if counter == int(num_tests):
+                master_json = get_benchmark_dictionary("CHECK_PR_TESTS", "check_pr_tests",
+                                                        "actions/reviews/CheckPRTests.py",
+                                                        "All tests included in the logfile have PASSED", 1)
+                write_json_output(master_json)
+                return print("All tests included in the PR have PASSED")
+
+            else:
+                master_json = get_benchmark_dictionary("CHECK_PR_TESTS", "check_pr_tests",
+                                                    "actions/reviews/CheckPRTests.py",
+                                                    "A test or more included in the logfile seem to be "
+                                                    "failing. {pos1} Tests were included of which {pos2} "
+                                                    "passed".format(pos1=str(num_tests), pos2=str(counter)),
+                                                    0)
+                write_json_output(master_json)
+                raise Exception("A test or more included in the logfile seem to be failing. '{pos1}' Tests were included of "
+                    "which '{pos2}' passed".format(pos1=str(num_tests), pos2=str(counter)))
+    else: 
+        master_json = get_benchmark_dictionary("CHECK_PR_TESTS", "check_pr_tests", "actions/reviews/CheckPRTests.py",
+                                            "The log file containing the tests was not included in this Pull Request. Please run the tests and add it", 0)
+        write_json_output(master_json)
+        raise Exception ("The logfile containing the tests was not included in this Pull Request. Please run the tests and add it")  

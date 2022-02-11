@@ -6,3 +6,5 @@
 __STATICS_PATH ='github/workspace/common/utils/statics/Statics.py'
 
 __HELPER_PATHS = 'github/workspace/common/utils/helpers/helper.py'
+
+__TEST_LOG_PATH = 'github/workspace/test/unitary_testing.out'
