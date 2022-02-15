@@ -25,7 +25,7 @@ def check_pr_tests():
             check_tests()
         else:
             master_json = get_benchmark_dictionary("CHECK_PR_TESTS", "check_pr_tests", "actions/reviews/CheckPRTests.py",
-                                            "This PR does not require testing based on the files which have been added: {pos1} and modified: {pos2}".format(pos1=added_files, pos2=modified_files), 0)
+                                            "This PR does not require testing based on the files which have been added: {pos1} and modified: {pos2}".format(pos1=added_files, pos2=modified_files), 1)
             write_json_output(master_json)
             return print("This PR does not require testing based on the files which have been added: {pos1} and modified: {pos2}".format(pos1=added_files, pos2=modified_files))
 
