@@ -22,7 +22,13 @@ def check_pr_tests():
                 remaining_files.append(added_file)
 
         if len(remaining_files) != 0:
-            check_tests()
+            if 'unitary_testing.out' not in modified_files:
+                master_json = get_benchmark_dictionary("CHECK_PR_TESTS", "check_pr_tests", "actions/reviews/CheckPRTests.py",
+                                            "The logfile containing the tests has been carried over from main. Please re-run the tests and push the updated file", 0)
+                write_json_output(master_json)
+                return print("The logfile containing the tests has been carried over from main. Please re-run the tests and push the updated file")
+            else:
+                check_tests()
         else:
             master_json = get_benchmark_dictionary("CHECK_PR_TESTS", "check_pr_tests", "actions/reviews/CheckPRTests.py",
                                             "This PR does not require testing based on the files which have been added: {pos1} and modified: {pos2}".format(pos1=added_files, pos2=modified_files), 1)

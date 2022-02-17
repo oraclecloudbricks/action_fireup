@@ -112,12 +112,9 @@ def get_review_number():
 
 def check_tests():
     if os.path.isfile(static.__TEST_LOG_PATH):
-        # print('FILE EXISTS')
         log_file = open(static.__TEST_LOG_PATH).read()
         for match in re.finditer('collected', log_file):
-            # print(match)
             num_tests = log_file[match.start() + 10:match.end() + 3]
-            # print(num_tests)
             counter = 0
             for match in re.finditer('PASSED', log_file):
                 test_info = log_file[match.start():match.end() + 7]
